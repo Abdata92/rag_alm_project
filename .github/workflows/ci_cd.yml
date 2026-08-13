@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "main", "master" ]
 
+# Permissions globales pour autoriser le push sur GHCR
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   # ----------------------------------------------------
   # JOB 1 : CONTINUOUS INTEGRATION (CI)
@@ -40,6 +45,9 @@ jobs:
     needs: test-and-lint
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: 📥 Checkout du code
@@ -52,15 +60,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🔤 Passer le nom de l'image en minuscules
+      - name: 🔤 Passer le nom du dépôt en minuscules
         id: string
-        run: echo "OWNER_LOWER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+        run: echo "REPO_LOWER=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: 🐳 Build et Push de l'image Docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER_LOWER }}/rag-alm-app:latest
-            ghcr.io/${{ env.OWNER_LOWER }}/rag-alm-app:${{ github.sha }}
+            ghcr.io/${{ env.REPO_LOWER }}:latest
+            ghcr.io/${{ env.REPO_LOWER }}:${{ github.sha }}
