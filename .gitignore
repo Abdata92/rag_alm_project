@@ -1,0 +1,25 @@
+# Fichiers et dossiers généraux
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environnements virtuels
+rag_venv/
+.venv/
+env/
+venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Fichiers volumineux ou temporaires du projet RAG
+*.pdf
+.env
+data/
+faiss_index/
+.faiss_db/
