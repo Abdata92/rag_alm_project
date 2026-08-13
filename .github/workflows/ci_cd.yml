@@ -52,11 +52,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: 🔤 Passer le nom de l'image en minuscules
+        id: string
+        run: echo "OWNER_LOWER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: 🐳 Build et Push de l'image Docker
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/rag-alm-app:latest
-            ghcr.io/${{ github.repository_owner }}/rag-alm-app:${{ github.sha }}
+            ghcr.io/${{ env.OWNER_LOWER }}/rag-alm-app:latest
+            ghcr.io/${{ env.OWNER_LOWER }}/rag-alm-app:${{ github.sha }}
