@@ -1,7 +1,6 @@
 # Assistant Conversationnel RAG sur la Documentation Financière (ALM)
 ## Résumé du Projet
 Développement de A à Z d'un agent conversationnel intelligent basé sur une architecture RAG (Retrieval-Augmented Generation) pour un département ALM (Gestion Actif/Passif) dans le secteur de l'assurance-vie.
-
 L'outil permet aux équipes financières d'interroger en langage naturel une masse de Documents d'Informations Clés (DIC) réglementaires afin d'accélérer la prise de décision et de synthétiser les caractéristiques et niveaux de risque des placements financiers.
 
 ## Problématique Métier (Business Value)
@@ -10,30 +9,30 @@ Les équipes ALM gèrent de très nombreux investissements chaque année et doiv
 ### Objectif : Mettre à disposition un assistant IA local, sécurisé et précis capable d'extraire instantanément les informations clés des DIC tout en citant systématiquement ses sources.
 
 ## Stack Technique & Architecture
-LLM Local (Open Weights) : qwen2:1.5b (via Ollama) garantissant la confidentialité des données financières internes.
+* LLM Local (Open Weights) : qwen2:1.5b (via Ollama) garantissant la confidentialité des données financières internes.
 
-Embeddings : sentence-transformers/paraphrase-multilingual-mpnet-base-v2 adapté au traitement multilingue (français/anglais).
+* Embeddings : sentence-transformers/paraphrase-multilingual-mpnet-base-v2 adapté au traitement multilingue (français/anglais).
 
-Vector Store : FAISS (Facebook AI Similarity Search) pour l'indexation et la recherche vectorielle rapide.
+* Vector Store : FAISS (Facebook AI Similarity Search) pour l'indexation et la recherche vectorielle rapide.
 
-Orchestration RAG : LangChain (gestion du pipeline RAG, prompt engineering, gestion de la mémoire conversationnelle).
+* Orchestration RAG : LangChain (gestion du pipeline RAG, prompt engineering, gestion de la mémoire conversationnelle).
 
-Interface Utilisateur : Streamlit pour une application web interactive et ergonomique.
+* Interface Utilisateur : Streamlit pour une application web interactive et ergonomique.
 
-Évaluation Métier : Calcul du F1 BERTScore sur un benchmark de 619 requêtes financières d'évaluation.
+* Évaluation Métier : Calcul du F1 BERTScore sur un benchmark de 619 requêtes financières d'évaluation.
 
-Ingénierie & MLOps : * Gestionnaire de dépendances : Poetry
+* Ingénierie & MLOps : * Gestionnaire de dépendances : Poetry
 
-Conteneurisation : Docker
+* Conteneurisation : Docker
 
-Pipeline CI/CD : GitHub Actions (tests unitaires automatisés et publication de l'image Docker sur GHCR).
+* Pipeline CI/CD : GitHub Actions (tests unitaires automatisés et publication de l'image Docker sur GHCR).
 
 ## Fonctionnalités Clés
-Analyse & Chunking Intelligents des DIC : Découpage optimisé des documents PDF réglementaires pour préserver le contexte financier et le niveau de risque des produits.
+* Analyse & Chunking Intelligents des DIC : Découpage optimisé des documents PDF réglementaires pour préserver le contexte financier et le niveau de risque des produits.
 
-Recherche Sémantique & Sourcing : Récupération dynamique des passages pertinents avec affichage explicite des fichiers sources consultés pour chaque réponse.
+* Recherche Sémantique & Sourcing : Récupération dynamique des passages pertinents avec affichage explicite des fichiers sources consultés pour chaque réponse.
 
-Mémoire Conversationnelle : Suivi du fil de la discussion pour permettre aux analystes de poser des questions de suivi (follow-up).
+* Mémoire Conversationnelle : Suivi du fil de la discussion pour permettre aux analystes de poser des questions de suivi (follow-up).
 
 Interface Graphique Intuitive : Chatbot Streamlit permettant le suivi des échanges et le nettoyage de l'historique en un clic.
 
