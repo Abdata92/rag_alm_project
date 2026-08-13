@@ -73,7 +73,14 @@ rag_alm_project/
     1- Lancer Streamlit "poetry add streamlit"
     2- lancer l'application web "poetry run streamlit run app.py"
 
+# VI. TEST avec pytest 
+1 - créer le fichier  "tests/test_rag.py"
+2 - créer le Dockerfile
+3 -  Exécuter poetry add pytest
+4 - poetry run pytest
+
 # VI. Architecture du Pipeline CI/CD
+
 
 [ Git Push / PR sur main ]
          │
@@ -90,3 +97,8 @@ rag_alm_project/
     └── (Optionnel) Déploiement automatique sur serveur / Cloud Sandbox
 
 ## VI.1. Créer le Dockerfile pour Streamlit
+## VI.2. Écrire un test unitaire court pour le CI
+Pour que la phase de CI valide le code à chaque modification, créez un dossier tests/ à la racine et un fichier tests/test_rag.py
+
+## VI.3. Créer le Workflow GitHub Actions
+- À la racine du projet, créez la structure des dossiers suivants : .github/workflows/ puis ajoutez le fichier .github/workflows/ci_cd.yml :
