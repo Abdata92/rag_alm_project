@@ -122,6 +122,12 @@ cd rag_alm_project
 docker build -t rag-alm-app .
 docker run -p 8501:8501 rag-alm-app
 
+ou
+
+# Récupération directe de l'image conteneurisée depuis GHCR
+docker pull ghcr.io/abdata92/rag_alm_project:latest
+docker run -p 8501:8501 ghcr.io/abdata92/rag_alm_project:latest
+
 ```
 
 L'application Streamlit sera immédiatement accessible sur `http://localhost:8501`.
@@ -148,8 +154,8 @@ poetry run streamlit run app.py
 ## 👤 Auteur & Contact
 
 **Abel FOUOBE** – *Senior Data Scientist / ML Engineer*
-
-* **GitHub :** [@Abdata92](https://www.google.com/search?q=https://github.com/Abdata92)
+* **LinkedIn :** [linkedin.com/in/abel-fouobe-55486181](https://www.linkedin.com/in/abel-fouobe-55486181)
+* **GitHub :** [@Abdata92](https://github.com/Abdata92)
 * **Projet :** RAG ALM Financial Assistant
 
 ```
