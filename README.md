@@ -1,6 +1,6 @@
 # 🏦 RAG ALM - Assistant Conversationnel sur Documentation Financière
 
-[![CI/CD Pipeline](https://github.com/Abdata92/rag_alm_project/actions/workflows/ci.yml/badge.svg)](https://github.com/Abdata92/rag_alm_project/actions)
+[![CI/CD Pipeline](https://github.com/Abdata92/rag_alm_project/actions/workflows/ci_cd.yml/badge.svg)](https://github.com/Abdata92/rag_alm_project/actions)
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Package Manager](https://img.shields.io/badge/poetry-1.8%2B-blueviolet.svg)](https://python-poetry.org/)
 [![Docker](https://img.shields.io/badge/docker-ready-2496ED.svg)](https://www.docker.com/)
