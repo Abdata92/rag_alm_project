@@ -1,46 +1,165 @@
-# Assistant Conversationnel RAG sur la Documentation Financière (ALM)
-## Résumé du Projet
-Développement de A à Z d'un agent conversationnel intelligent basé sur une architecture RAG (Retrieval-Augmented Generation) pour un département ALM (Gestion Actif/Passif) dans le secteur de l'assurance-vie.
-L'outil permet aux équipes financières d'interroger en langage naturel une masse de Documents d'Informations Clés (DIC) réglementaires afin d'accélérer la prise de décision et de synthétiser les caractéristiques et niveaux de risque des placements financiers.
+# 🏦 RAG ALM - Assistant Conversationnel sur Documentation Financière
 
-## Problématique Métier (Business Value)
-Les équipes ALM gèrent de très nombreux investissements chaque année et doivent analyser des documents harmonisés au niveau européen (les DIC) fournis par les gestionnaires de fonds. Face au volume et à la complexité des rapports financiers, la recherche manuelle d'informations est chronophage.
+[![CI/CD Pipeline](https://github.com/Abdata92/rag_alm_project/actions/workflows/ci_cd.yml/badge.svg)](https://github.com/Abdata92/rag_alm_project/actions)
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Package Manager](https://img.shields.io/badge/poetry-1.8%2B-blueviolet.svg)](https://python-poetry.org/)
+[![Docker](https://img.shields.io/badge/docker-ready-2496ED.svg)](https://www.docker.com/)
+[![LLM](https://img.shields.io/badge/LLM-Qwen2--1.5B-orange.svg)](https://ollama.com/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-### Objectif : Mettre à disposition un assistant IA local, sécurisé et précis capable d'extraire instantanément les informations clés des DIC tout en citant systématiquement ses sources.
+> **Assistant IA local, souverain et hautement prévisible** conçu pour accélérer l'analyse des Documents d'Informations Clés (DIC) au sein des départements Asset & Liability Management (ALM) en assurance-vie.
 
-## Stack Technique & Architecture
-* LLM Local (Open Weights) : qwen2:1.5b (via Ollama) garantissant la confidentialité des données financières internes.
+---
 
-* Embeddings : sentence-transformers/paraphrase-multilingual-mpnet-base-v2 adapté au traitement multilingue (français/anglais).
+## 🎯 Problématique Métier & Valeur Ajoutée
 
-* Vector Store : FAISS (Facebook AI Similarity Search) pour l'indexation et la recherche vectorielle rapide.
+Les équipes **ALM (Gestion Actif/Passif)** analysent quotidiennement des volumes conséquents de documents réglementaires européens (DIC) émis par les sociétés de gestion. L'extraction manuelle de métriques complexes (profil de risque, coûts, indicateurs de performance, maturités) est **chronophage et sujette au risque opérationnel**.
 
-* Orchestration RAG : LangChain (gestion du pipeline RAG, prompt engineering, gestion de la mémoire conversationnelle).
+**La Solution :** Un agent RAG (Retrieval-Augmented Generation) sur architecture 100 % locale pour :
+* **Garantir la confidentialité absolue** des données financières internes (aucun appel d'API vers des services tiers cloud).
+* **Accélérer la prise de décision** grâce à des réponses synthétiques en langage naturel.
+* **Éliminer le risque d'hallucination** grâce à une traçabilité stricte (sourcing dynamique des passages sources).
 
-* Interface Utilisateur : Streamlit pour une application web interactive et ergonomique.
+---
 
-* Évaluation Métier : Calcul du F1 BERTScore sur un benchmark de 619 requêtes financières d'évaluation.
+## 📊 Performances & Métriques d'Évaluation (KPIs)
 
-* Ingénierie & MLOps : * Gestionnaire de dépendances : Poetry
+Pour valider l'approche en conditions réelles, le pipeline a été soumis à un **benchmark de validation automatisé de 619 requêtes financières complexes**.
 
-* Conteneurisation : Docker
+| Métrique / KPI | Résultat Obtenu | Objectif / Exigence | Statut |
+| :--- | :---: | :---: | :---: |
+| **F1 BERTScore** | **71.36 %** | $\ge 60.00 \%$ | ✅ Validé |
+| **Taux de Succès d'Inférence** | **100 %** *(0 erreur / 619)* | $100 \%$ | ✅ Validé |
+| **Confidentialité / Souveraineté** | **100 % On-Premise** | Strictement Local | ✅ Validé |
 
-* Pipeline CI/CD : GitHub Actions (tests unitaires automatisés et publication de l'image Docker sur GHCR).
+---
 
-## Fonctionnalités Clés
-* Analyse & Chunking Intelligents des DIC : Découpage optimisé des documents PDF réglementaires pour préserver le contexte financier et le niveau de risque des produits.
+## 🏗️ Architecture du Pipeline RAG
 
-* Recherche Sémantique & Sourcing : Récupération dynamique des passages pertinents avec affichage explicite des fichiers sources consultés pour chaque réponse.
 
-* Mémoire Conversationnelle : Suivi du fil de la discussion pour permettre aux analystes de poser des questions de suivi (follow-up).
 
-Interface Graphique Intuitive : Chatbot Streamlit permettant le suivi des échanges et le nettoyage de l'historique en un clic.
+```mermaid
+graph TD
+    subgraph Ingestion_Indexation ["Ingestion et Indexation"]
+        A["📄 PDF / DIC Réglementaires"] -->|"Parsing & Chunking Sémantique"| B["Text Chunks"]
+        B -->|"Embedding: paraphrase-multilingual-mpnet"| C["🔢 Vector Embeddings"]
+        C -->|"Stockage & Indexation"| D[("⚡ FAISS Vector Store")]
+    end
 
-Validation Métier Amont/Aval : Benchmark d'évaluation automatisé garantissant un haut niveau de fidélité par rapport aux réponses de référence.
+    subgraph Pipeline_RAG ["Pipeline RAG et Génération"]
+        E["💬 Question Analyste ALM"] -->|"Recherche Vectorielle k-NN"| D
+        D -->|"Extraction Contexte Pertinent"| F["🧠 LangChain Orchestrator"]
+        E --> F
+        F -->|"Prompt Engineering + Contexte"| G["🤖 LLM Local: Qwen2-1.5B via Ollama"]
+        G -->|"Génération de Réponse + Citations"| H["💻 Interface Streamlit"]
+    end
 
-## Résultats & Performances (KPIs)
-Précision & Pertinence : F1 BERTScore de 71,36 % atteint sur le dataset officiel de 619 requêtes (dépassant largement l'exigence minimale de 60 %).
+```
 
-Stabilité Technique : 100 % de succès d'inférence (0 erreur) lors du traitement par lots sur l'intégralité du benchmark.
+---
 
-Déploiement : Conteneurisation Docker complète et intégration CI/CD prêtes pour la mise en production.
+## 🛠️ Stack Technique & Standard Engineering
+
+* **LLM Local :** `Qwen2-1.5B` via **Ollama** (Inférence locale, latence faible, souveraineté totale).
+* **Embeddings :** `sentence-transformers/paraphrase-multilingual-mpnet-base-v2` (Spécifiquement finetuné pour la recherche multilingue FR/EN).
+* **Vector Database :** **FAISS** (*Facebook AI Similarity Search*) pour une recherche de similarité $k$-NN ultra-rapide.
+* **Orchestration :** **LangChain** (Pipeline RAG, mémoire conversationnelle interactive, gestion des prompts).
+* **Interface Utilisateur :** **Streamlit** (Interface conversationnelle ergonomique avec nettoyage de session en un clic).
+* **Packaging & MLOps :**
+* **Gestionnaire de dépendances :** **Poetry** (reproductibilité stricte via `poetry.lock`).
+* **Conteneurisation :** **Docker** & `docker-compose`.
+* **CI/CD :** **GitHub Actions** (Linting, exécution automatique des tests unitaires `pytest` et build de l'image).
+
+
+
+---
+
+## 📂 Structure du Dépôt
+
+```bash
+rag_alm_project/
+├── .github/workflows/    # Pipelines CI/CD (Automation tests & builds)
+├── data/
+│   └── evaluation/       # Dataset de benchmark (619 requêtes de test)
+├── src/                  # Code source modularisé
+├── tests/                # Tests unitaires & d'intégration (pytest)
+├── vector_db/            # Index vectoriel FAISS persistant
+├── Dockerfile            # Conteneurisation de l'application
+├── pyproject.toml        # Configuration des dépendances Poetry
+├── main_evaluator.py     # Script d'évaluation automatisé (BERTScore)
+├── main_parse_emb_vect.py# Pipeline d'ingestion et d'embedding des documents
+├── main_llm_rag.py       # Moteur d'inférence RAG & Orchestration LLM
+└── app.py                # Interface utilisateur Streamlit
+
+```
+
+---
+
+## 🚀 Guide de Démarrage Rapide (Quickstart)
+
+### Prérequis
+
+* [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
+* [Ollama](https://ollama.com/) installé localement avec le modèle Qwen2 :
+```bash
+ollama pull qwen2:1.5b
+
+```
+
+
+
+### 1. Cloner le Projet
+
+```bash
+git clone [https://github.com/Abdata92/rag_alm_project.git](https://github.com/Abdata92/rag_alm_project.git)
+cd rag_alm_project
+
+```
+
+### 2. Lancement Rapide via Docker
+
+```bash
+docker build -t rag-alm-app .
+docker run -p 8501:8501 rag-alm-app
+
+ou
+
+# Récupération directe de l'image conteneurisée depuis GHCR
+docker pull ghcr.io/abdata92/rag_alm_project:latest
+docker run -p 8501:8501 ghcr.io/abdata92/rag_alm_project:latest
+
+```
+
+L'application Streamlit sera immédiatement accessible sur `http://localhost:8501`.
+<img width="1857" height="958" alt="image" src="https://github.com/user-attachments/assets/9e8cd875-d88e-4b5a-9585-8c79b564a549" />
+
+
+### 3. Utilisation en Développement Local (avec Poetry)
+
+```bash
+# Installation des dépendances
+poetry install
+
+# Exécution des tests unitaires
+poetry run pytest
+
+# Lancement de l'évaluation du modèle
+poetry run python main_evaluator.py
+
+# Lancement de l'application web
+poetry run streamlit run app.py
+
+```
+
+---
+
+## 👤 Auteur & Contact
+
+**Abel FOUOBE** – *Senior Data Scientist / ML Engineer*
+* **LinkedIn :** [linkedin.com/in/abel-fouobe-55486181](https://www.linkedin.com/in/abel-fouobe-55486181)
+* **GitHub :** [@Abdata92](https://github.com/Abdata92)
+* **Projet :** RAG ALM Financial Assistant
+
+```
+
+```
