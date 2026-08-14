@@ -131,6 +131,8 @@ docker run -p 8501:8501 ghcr.io/abdata92/rag_alm_project:latest
 ```
 
 L'application Streamlit sera immédiatement accessible sur `http://localhost:8501`.
+<img width="1857" height="958" alt="image" src="https://github.com/user-attachments/assets/9e8cd875-d88e-4b5a-9585-8c79b564a549" />
+
 
 ### 3. Utilisation en Développement Local (avec Poetry)
 
