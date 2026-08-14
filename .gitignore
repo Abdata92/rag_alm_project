@@ -20,6 +20,6 @@ __pycache__/
 # Fichiers volumineux ou temporaires du projet RAG
 *.pdf
 .env
-data/
+# data/
 faiss_index/
 .faiss_db/
